@@ -1,4 +1,5 @@
 {
+  "semi": false,
   "printWidth": 120,
   "importOrder": ["^(react|next?/?([a-zA-Z/]*))$", "<THIRD_PARTY_MODULES>", "^@/(.*)$", "^[./]"],
   "importOrderSeparation": false,
