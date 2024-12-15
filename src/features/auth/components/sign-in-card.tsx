@@ -15,33 +15,32 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-
-const formShema = z.object({
-  email: z.string().email(),
-  password: z.string().trim().min(1, "Required").max(255),
-});
+import { useLogin } from "@/features/auth/api/use-login";
+import { loginSchema } from "@/features/auth/validations/auth";
 
 export const SignInCard = () => {
-  const form = useForm<z.infer<typeof formShema>>({
-    resolver: zodResolver(formShema),
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formShema>) => {};
+  const { mutate } = useLogin();
+
+  const onSubmit = (values: z.infer<typeof loginSchema>) => {
+    mutate({ json: values });
+  };
 
   return (
     <Card className="h-full w-full border-none shadow-none md:w-[487px]">
       <CardHeader className="flex items-center justify-center p-7 text-center">
         <CardTitle className="text-2xl">Sign In</CardTitle>
       </CardHeader>
-
       <div className="px-7">
         <Separator />
       </div>
-
       <CardContent className="p-7">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">

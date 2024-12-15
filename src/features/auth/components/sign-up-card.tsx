@@ -21,16 +21,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-
-const formShema = z.object({
-  name: z.string().trim().min(1, "Required").max(255),
-  email: z.string().email(),
-  password: z.string().trim().min(8).max(255),
-});
+import { useRegister } from "@/features/auth/api/use-register";
+import { registerSchema } from "@/features/auth/validations/auth";
 
 export const SignUpCard = () => {
-  const form = useForm<z.infer<typeof formShema>>({
-    resolver: zodResolver(formShema),
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -38,7 +34,11 @@ export const SignUpCard = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formShema>) => {};
+  const { mutate } = useRegister();
+
+  const onSubmit = (values: z.infer<typeof registerSchema>) => {
+    mutate({ json: values });
+  };
 
   return (
     <Card className="h-full w-full border-none shadow-none md:w-[487px]">

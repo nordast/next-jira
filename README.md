@@ -11,7 +11,8 @@ npm run dev
 ## Tech Stack
 
 - Next.js 15
-- React.js 19 (React Hook Form)
+- React.js 19 (React Hook Form, React Query)
 - TypeScript
+- Hono
 - TailwindCSS
 - ShadCN
