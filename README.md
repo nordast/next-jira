@@ -16,3 +16,4 @@ npm run dev
 - Hono
 - TailwindCSS
 - ShadCN
+- AppWrite
