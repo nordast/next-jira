@@ -3,7 +3,7 @@ import { Hono } from "hono";
 import { deleteCookie, setCookie } from "hono/cookie";
 import { ID } from "node-appwrite";
 import { AUTH_COOKIE } from "@/features/auth/constants";
-import { loginSchema, registerSchema } from "@/features/auth/validations/auth";
+import { loginSchema, registerSchema } from "@/features/auth/validations";
 import { createAdminClient } from "@/lib/appwrite";
 import { sessionMiddleware } from "@/lib/session-middleware";
 

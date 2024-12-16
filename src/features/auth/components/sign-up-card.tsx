@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -22,7 +24,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { useRegister } from "@/features/auth/api/use-register";
-import { registerSchema } from "@/features/auth/validations/auth";
+import { registerSchema } from "@/features/auth/validations";
 
 export const SignUpCard = () => {
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -34,7 +36,7 @@ export const SignUpCard = () => {
     },
   });
 
-  const { mutate } = useRegister();
+  const { mutate, isPending } = useRegister();
 
   const onSubmit = (values: z.infer<typeof registerSchema>) => {
     mutate({ json: values });
@@ -107,7 +109,7 @@ export const SignUpCard = () => {
               )}
             />
 
-            <Button disabled={false} size="lg" className="w-full">
+            <Button disabled={isPending} size="lg" className="w-full">
               Register
             </Button>
 
@@ -118,7 +120,7 @@ export const SignUpCard = () => {
             <CardContent className="flex flex-col gap-y-4 p-7">
               <Button
                 variant="secondary"
-                disabled={false}
+                disabled={isPending}
                 size="lg"
                 className="w-full"
               >
@@ -128,7 +130,7 @@ export const SignUpCard = () => {
 
               <Button
                 variant="secondary"
-                disabled={false}
+                disabled={isPending}
                 size="lg"
                 className="w-full"
               >
