@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import Navigation from "@/components/navigation";
 import { Separator } from "@/components/ui/separator";
+import WorkspaceSwitcher from "@/components/workspace-switcher";
 
 const Sidebar = () => {
   return (
@@ -17,6 +18,10 @@ const Sidebar = () => {
           className="w-auto"
         />
       </Link>
+
+      <Separator className="my-4" />
+
+      <WorkspaceSwitcher />
 
       <Separator className="my-4" />
 
