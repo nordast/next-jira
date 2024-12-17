@@ -1,9 +1,12 @@
 "use client";
 
-import React from "react";
+import Image from "next/image";
+import React, { useRef } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ImageIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -25,6 +28,7 @@ interface CreateWorkspacesFormProps {
 
 const CreateWorkspacesForm = ({ onCancel }: CreateWorkspacesFormProps) => {
   const { mutate, isPending } = useCreateWorkspace();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<z.infer<typeof createWorkspaceSchema>>({
     resolver: zodResolver(createWorkspaceSchema),
@@ -34,7 +38,19 @@ const CreateWorkspacesForm = ({ onCancel }: CreateWorkspacesFormProps) => {
   });
 
   const onSubmit = (values: z.infer<typeof createWorkspaceSchema>) => {
-    mutate({ json: values });
+    const finalValues = {
+      ...values,
+      image: values.image instanceof File ? values.image : "",
+    };
+
+    mutate({ form: finalValues });
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      form.setValue("image", file);
+    }
   };
 
   return (
@@ -66,6 +82,62 @@ const CreateWorkspacesForm = ({ onCancel }: CreateWorkspacesFormProps) => {
                   </FormItem>
                 )}
               />
+
+              <FormField
+                name="image"
+                control={form.control}
+                render={({ field }) => (
+                  <div className="flex flex-col gap-y-2">
+                    <div className="flex items-center gap-x-5">
+                      {field.value ? (
+                        <div className="relative size-[72px] overflow-hidden rounded-md">
+                          <Image
+                            fill
+                            className="object-cover"
+                            src={
+                              field.value instanceof File
+                                ? URL.createObjectURL(field.value)
+                                : field.value
+                            }
+                            alt="Logo"
+                          />
+                        </div>
+                      ) : (
+                        <Avatar className="size-[72px]">
+                          <AvatarFallback>
+                            <ImageIcon className="size-[37px] text-neutral-400" />
+                          </AvatarFallback>
+                        </Avatar>
+                      )}
+                      <div className="flex flex-col">
+                        <p className="text-sm">Workspace Icon</p>
+                        <p className="text-sm text-muted-foreground">
+                          .jpg, .png, .svg, max 1MB
+                        </p>
+                        <input
+                          ref={inputRef}
+                          disabled={isPending}
+                          onChange={handleImageChange}
+                          type="file"
+                          className="hidden"
+                          accept=".image/jpeg, .image/png, .image/svg"
+                        />
+                        <Button
+                          type="button"
+                          disabled={isPending}
+                          variant="teritary"
+                          size="xs"
+                          className="mt-2 w-fit"
+                          onClick={() => inputRef.current?.click()}
+                        >
+                          Upload Image
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              />
+              <Separator />
 
               <div className="flex items-center justify-end gap-x-4 pt-7">
                 <Button
