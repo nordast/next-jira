@@ -111,7 +111,10 @@ const CreateWorkspacesForm = ({ onCancel }: CreateWorkspacesFormProps) => {
                           />
                         </div>
                       ) : (
-                        <Avatar className="size-[72px]">
+                        <Avatar
+                          className="size-[72px] cursor-pointer"
+                          onClick={() => inputRef.current?.click()}
+                        >
                           <AvatarFallback>
                             <ImageIcon className="size-[37px] text-neutral-400" />
                           </AvatarFallback>

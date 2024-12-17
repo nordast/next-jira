@@ -12,7 +12,7 @@ import { useGetWorkspaces } from "@/features/workspaces/api/use-get-workspaces";
 import WorkspaceAvatar from "@/features/workspaces/components/workspace-avatar";
 
 const WorkspaceSwitcher = () => {
-  const { data: workspaces } = useGetWorkspaces();
+  const { data: workspaces, isLoading } = useGetWorkspaces();
 
   return (
     <div className="flex flex-col gap-y-2">
@@ -21,25 +21,27 @@ const WorkspaceSwitcher = () => {
         <RiAddCircleFill className="size-5 cursor-pointer text-neutral-400 transition-opacity hover:opacity-75" />
       </div>
 
-      <Select>
-        <SelectTrigger className="w-full bg-neutral-200 p-1 font-medium">
-          <SelectValue placeholder="Select workspace" />
-        </SelectTrigger>
+      {!isLoading && workspaces?.total !== 0 && (
+        <Select>
+          <SelectTrigger className="w-full bg-neutral-200 p-1 font-medium">
+            <SelectValue placeholder="Select workspace" />
+          </SelectTrigger>
 
-        <SelectContent>
-          {workspaces?.documents.map((workspace) => (
-            <SelectItem key={workspace.$id} value={workspace.$id}>
-              <div className="flex cursor-pointer items-center justify-start gap-3 font-medium">
-                <WorkspaceAvatar
-                  name={workspace.name}
-                  image={workspace.imageUrl}
-                />
-                <span className="truncate">{workspace.name}</span>
-              </div>
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+          <SelectContent>
+            {workspaces?.documents.map((workspace) => (
+              <SelectItem key={workspace.$id} value={workspace.$id}>
+                <div className="flex cursor-pointer items-center justify-start gap-3 font-medium">
+                  <WorkspaceAvatar
+                    name={workspace.name}
+                    image={workspace.imageUrl}
+                  />
+                  <span className="truncate">{workspace.name}</span>
+                </div>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      )}
     </div>
   );
 };
