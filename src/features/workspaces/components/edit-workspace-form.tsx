@@ -4,8 +4,9 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useRef } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeftIcon, ImageIcon } from "lucide-react";
+import { ArrowLeftIcon, CopyIcon, ImageIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -21,6 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { useDeleteWorkspace } from "@/features/workspaces/api/use-delete-workspace";
+import { useResetInviteCode } from "@/features/workspaces/api/use-reset-invite-code";
 import { useUpdateWorkspace } from "@/features/workspaces/api/use-update-workspace";
 import { Workspace } from "@/features/workspaces/types";
 import { updateWorkspaceSchema } from "@/features/workspaces/validations";
@@ -40,10 +42,18 @@ const EditWorkspaceForm = ({
   const { mutate, isPending } = useUpdateWorkspace();
   const { mutate: deleteWorkspace, isPending: isDeletingWorkspace } =
     useDeleteWorkspace();
+  const { mutate: resetInviteCode, isPending: isResetingInviteCode } =
+    useResetInviteCode();
 
   const [DeleteDialog, confirmDelete] = useConfirm(
     "Delete Workspace",
     "Are you sure you want to delete this workspace?",
+    "destructive",
+  );
+
+  const [ResetDialog, confirmReset] = useConfirm(
+    "Reset Invite Link",
+    "Are you sure you want to reset invite link?",
     "destructive",
   );
   const inputRef = useRef<HTMLInputElement>(null);
@@ -96,9 +106,34 @@ const EditWorkspaceForm = ({
     );
   };
 
+  const handleResetInviteCode = async () => {
+    const ok = await confirmReset();
+    if (!ok) return;
+
+    resetInviteCode(
+      {
+        param: { workspaceId: initialValues.$id },
+      },
+      {
+        onSuccess: () => {
+          router.refresh();
+        },
+      },
+    );
+  };
+
+  const fullInviteLink = `${window.location.origin}/workspaces/${initialValues.$id}/join/${initialValues.inviteCode}`;
+
+  const handleCopyInviteLink = () => {
+    navigator.clipboard.writeText(fullInviteLink).then(() => {
+      toast.success("Invite link copied to clipboard");
+    });
+  };
+
   return (
     <div className="flex flex-col gap-y-4">
       <DeleteDialog />
+      <ResetDialog />
 
       <Card className="h-full w-full border-none shadow-none">
         <CardHeader className="flex flex-row items-center gap-x-4 space-y-0 p-7">
@@ -146,7 +181,7 @@ const EditWorkspaceForm = ({
                   name="image"
                   control={form.control}
                   render={({ field }) => (
-                    <div className="flex flex-col gap-y-2">
+                    <div className="my-4 flex flex-col gap-y-2">
                       <div className="flex items-center gap-x-5">
                         {field.value ? (
                           <div className="relative size-[72px] overflow-hidden rounded-md">
@@ -239,6 +274,44 @@ const EditWorkspaceForm = ({
               </div>
             </form>
           </Form>
+        </CardContent>
+      </Card>
+
+      <Card className="h-full w-full border-none shadow-none">
+        <CardContent className="p-7">
+          <div className="flex flex-col">
+            <h3 className="mb-2 text-xl font-bold">Invite Members</h3>
+            <p className="text-sm text-muted-foreground">
+              Use this link to invite members to your workspace.
+            </p>
+            <div className="mt-4">
+              <div className="flex items-center gap-x-2">
+                <Input
+                  value={fullInviteLink}
+                  disabled
+                  className="w-full"
+                  placeholder="Invite Link"
+                />
+                <Button
+                  variant="secondary"
+                  className="size-12"
+                  onClick={handleCopyInviteLink}
+                  title="Copy invite link to clipboard"
+                >
+                  <CopyIcon className="size-5" />
+                </Button>
+              </div>
+            </div>
+            <Button
+              size="sm"
+              className="ml-auto mt-6 w-fit"
+              type="button"
+              disabled={isPending || isResetingInviteCode}
+              onClick={() => handleResetInviteCode()}
+            >
+              Reset Invite Link
+            </Button>
+          </div>
         </CardContent>
       </Card>
 
