@@ -136,6 +136,36 @@ const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
                           className="hidden"
                           accept=".image/jpeg, .image/png, .image/svg"
                         />
+
+                        {field.value ? (
+                          <Button
+                            type="button"
+                            disabled={isPending}
+                            variant="destructive"
+                            size="xs"
+                            className="mt-2 w-fit"
+                            onClick={() => {
+                              field.onChange(null);
+                              if (inputRef.current) {
+                                inputRef.current.value = "";
+                              }
+                            }}
+                          >
+                            Remove Image
+                          </Button>
+                        ) : (
+                          <Button
+                            type="button"
+                            disabled={isPending}
+                            variant="teritary"
+                            size="xs"
+                            className="mt-2 w-fit"
+                            onClick={() => inputRef.current?.click()}
+                          >
+                            Upload Image
+                          </Button>
+                        )}
+
                         <Button
                           type="button"
                           disabled={isPending}
