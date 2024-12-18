@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { useCreateWorkspace } from "@/features/workspaces/api/use-create-workspace";
 import { createWorkspaceSchema } from "@/features/workspaces/validations";
+import { cn } from "@/lib/utils";
 
 interface CreateWorkspacesFormProps {
   onCancel?: () => void;
@@ -159,6 +160,7 @@ const CreateWorkspaceForm = ({ onCancel }: CreateWorkspacesFormProps) => {
                   variant="secondary"
                   onClick={onCancel}
                   disabled={isPending}
+                  className={cn(!onCancel && "hidden")}
                 >
                   Cancel
                 </Button>
