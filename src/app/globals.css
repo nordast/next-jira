@@ -76,3 +76,14 @@ body {
     @apply text-blue-700 hover:text-blue-500 transition-colors duration-300;
   }
 }
+
+@layer utilities {
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
