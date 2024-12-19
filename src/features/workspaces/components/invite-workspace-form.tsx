@@ -45,35 +45,36 @@ const InviteWorkspaceForm = ({ initialValues }: InviteWorkspaceFormProps) => {
     <Card className="h-full w-full border-none shadow-none">
       <CardHeader className="p-7">
         <CardTitle className="text-xl font-bold">Join Workspace</CardTitle>
-        <CardDescription className="pb-8 pt-4">
-          You&apos;ve been invited to join <strong>{initialValues.name}</strong>{" "}
+
+        <CardDescription className="py-4">
+          You&apos;ve been invited to join <strong>{initialValues.name}</strong>
           workspace.
         </CardDescription>
-
-        <CardContent>
-          <div className="flex flex-col items-center justify-end gap-2 lg:flex-row">
-            <Button
-              type="button"
-              variant="secondary"
-              size="lg"
-              asChild
-              className="w-full lg:w-fit"
-              disabled={isPending}
-            >
-              <Link href="/">Cancel</Link>
-            </Button>
-            <Button
-              type="button"
-              className="w-full lg:w-fit"
-              size="lg"
-              onClick={onSubmit}
-              disabled={isPending}
-            >
-              Join Workspace
-            </Button>
-          </div>
-        </CardContent>
       </CardHeader>
+
+      <CardContent>
+        <div className="flex flex-col items-center justify-end gap-2 lg:flex-row">
+          <Button
+            type="button"
+            variant="secondary"
+            size="lg"
+            asChild
+            className="w-full lg:w-fit"
+            disabled={isPending}
+          >
+            <Link href="/">Cancel</Link>
+          </Button>
+          <Button
+            type="button"
+            className="w-full lg:w-fit"
+            size="lg"
+            onClick={onSubmit}
+            disabled={isPending}
+          >
+            Join Workspace
+          </Button>
+        </div>
+      </CardContent>
     </Card>
   );
 };
