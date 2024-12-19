@@ -123,7 +123,7 @@ const EditWorkspaceForm = ({
   };
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || "";
-  const fullInviteLink = `${appUrl}/workspaces/${initialValues.$id}/join/${initialValues.inviteCode}`;
+  const fullInviteLink = `${appUrl}/workspaces/${initialValues.$id}/invite/${initialValues.inviteCode}`;
 
   const handleCopyInviteLink = () => {
     navigator.clipboard.writeText(fullInviteLink).then(() => {
