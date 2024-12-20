@@ -54,12 +54,12 @@ const app = new Hono()
 
       const { name, image } = c.req.valid("form");
 
-      let uploadeImageUrl: string | undefined;
+      let uploadedImageUrl: string | undefined;
 
       if (image instanceof File) {
         const file = await storage.createFile(BUCKET_ID, ID.unique(), image);
         const arrayBuffer = await storage.getFilePreview(BUCKET_ID, file.$id);
-        uploadeImageUrl = `data:image/png;base64,${Buffer.from(arrayBuffer).toString("base64")}`;
+        uploadedImageUrl = `data:image/png;base64,${Buffer.from(arrayBuffer).toString("base64")}`;
       }
 
       const workspace = await databases.createDocument(
@@ -69,7 +69,7 @@ const app = new Hono()
         {
           name,
           userId: user.$id,
-          imageUrl: uploadeImageUrl,
+          imageUrl: uploadedImageUrl,
           inviteCode: generateInviteCode(),
         },
       );
@@ -111,14 +111,14 @@ const app = new Hono()
         return c.json({ error: "Unauthorized" }, 401);
       }
 
-      let uploadeImageUrl: string | undefined;
+      let uploadedImageUrl: string | undefined;
 
       if (image instanceof File) {
         const file = await storage.createFile(BUCKET_ID, ID.unique(), image);
         const arrayBuffer = await storage.getFilePreview(BUCKET_ID, file.$id);
-        uploadeImageUrl = `data:image/png;base64,${Buffer.from(arrayBuffer).toString("base64")}`;
+        uploadedImageUrl = `data:image/png;base64,${Buffer.from(arrayBuffer).toString("base64")}`;
       } else {
-        uploadeImageUrl = image;
+        uploadedImageUrl = image;
       }
 
       const workspace = await databases.updateDocument(
@@ -127,7 +127,7 @@ const app = new Hono()
         workspaceId,
         {
           name,
-          imageUrl: uploadeImageUrl,
+          imageUrl: uploadedImageUrl,
         },
       );
 

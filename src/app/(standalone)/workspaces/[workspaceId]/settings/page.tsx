@@ -17,14 +17,12 @@ const WorkspaceIdSettingsPage = async ({
 
   const { workspaceId } = await params;
 
-  const initialValues = await getWorkspace({
-    workspaceId: workspaceId,
-  });
+  const initialValues = await getWorkspace({ workspaceId });
 
   if (!initialValues) redirect("/");
 
   return (
-    <div className="w-full max-w-xl">
+    <div className="w-full lg:max-w-xl">
       <EditWorkspaceForm initialValues={initialValues} />
     </div>
   );

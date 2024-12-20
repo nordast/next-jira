@@ -11,14 +11,13 @@ import { cn } from "@/lib/utils";
 
 const Projects = () => {
   const workspaceId = useWorkspaceId();
-  const projectId = null; //TODO
   const { setIsOpen } = useCreateProjectModal();
   const { data } = useGetProjects({ workspaceId });
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-col gap-y-2">
-      <div className="flex items-center justify-between">
+    <div className="flex flex-col">
+      <div className="mb-2 flex items-center justify-between">
         <p className="text-xs uppercase text-neutral-500">Projects</p>
         <RiAddCircleFill
           title="Create project"
@@ -28,7 +27,7 @@ const Projects = () => {
       </div>
 
       {data?.documents.map((project) => {
-        const href = `/workspaces/${workspaceId}/projects/${projectId}`;
+        const href = `/workspaces/${workspaceId}/projects/${project.$id}`;
         const isActive = pathname === href;
 
         return (
