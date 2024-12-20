@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { useDeleteProject } from "@/features/projects/api/use-delete-project";
 import { useUpdateProject } from "@/features/projects/api/use-update-project";
 import { Project } from "@/features/projects/types";
 import { updateProjectSchema } from "@/features/projects/validations";
@@ -34,8 +35,8 @@ interface EditProjectFormProps {
 const EditProjectForm = ({ onCancel, initialValues }: EditProjectFormProps) => {
   const router = useRouter();
   const { mutate, isPending } = useUpdateProject();
-  // const { mutate: deleteProject, isPending: isDeletingProject } =
-  //   useDeleteProject();
+  const { mutate: deleteProject, isPending: isDeletingProject } =
+    useDeleteProject();
 
   const [DeleteDialog, confirmDelete] = useConfirm(
     "Delete Project",
@@ -80,16 +81,16 @@ const EditProjectForm = ({ onCancel, initialValues }: EditProjectFormProps) => {
     const ok = await confirmDelete();
     if (!ok) return;
 
-    // deleteProject(
-    //   {
-    //     param: { projectId: initialValues.$id },
-    //   },
-    //   {
-    //     onSuccess: () => {
-    //       window.location.href = "/";
-    //     },
-    //   },
-    // );
+    deleteProject(
+      {
+        param: { projectId: initialValues.$id },
+      },
+      {
+        onSuccess: () => {
+          window.location.href = `/workspace/${initialValues.workspaceId}`;
+        },
+      },
+    );
   };
 
   return (
@@ -254,7 +255,7 @@ const EditProjectForm = ({ onCancel, initialValues }: EditProjectFormProps) => {
               variant="destructive"
               className="ml-auto mt-6 w-fit"
               type="button"
-              disabled={isPending}
+              disabled={isPending || isDeletingProject}
               onClick={() => handleDelete()}
             >
               Delete Project
