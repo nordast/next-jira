@@ -165,17 +165,6 @@ const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
                             Upload Image
                           </Button>
                         )}
-
-                        <Button
-                          type="button"
-                          disabled={isPending}
-                          variant="teritary"
-                          size="xs"
-                          className="mt-2 w-fit"
-                          onClick={() => inputRef.current?.click()}
-                        >
-                          Upload Image
-                        </Button>
                       </div>
                     </div>
                   </div>
