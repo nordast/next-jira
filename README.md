@@ -13,7 +13,7 @@ npm run dev
 - Next.js 15
 - React.js 19 (React Hook Form, React Query)
 - TypeScript
-- Hono, nuqs
+- Hono, nuqs, zod
 - TailwindCSS
 - ShadCN
 - AppWrite
