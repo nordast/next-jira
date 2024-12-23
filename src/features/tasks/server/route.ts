@@ -8,7 +8,7 @@ import { Project } from "@/features/projects/types";
 import { createTaskSchema } from "@/features/tasks/validations";
 import { createAdminClient } from "@/lib/appwrite";
 import { sessionMiddleware } from "@/lib/session-middleware";
-import { TaskStatus } from "../types";
+import { Task, TaskStatus } from "../types";
 
 const app = new Hono()
 
@@ -56,7 +56,11 @@ const app = new Hono()
       if (dueDate) query.push(Query.equal("dueDate", dueDate));
       if (search) query.push(Query.search("name", search));
 
-      const tasks = await databases.listDocuments(DATABASE_ID, TASKS_ID, query);
+      const tasks = await databases.listDocuments<Task>(
+        DATABASE_ID,
+        TASKS_ID,
+        query,
+      );
 
       const projectIds = tasks.documents.map((task) => task.projectId);
       const assigneeIds = tasks.documents.map((task) => task.assigneeId);

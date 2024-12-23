@@ -6,7 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useGetTasks } from "@/features/tasks/api/use-get-tasks";
+import { columns } from "@/features/tasks/components/columns";
 import DataFilters from "@/features/tasks/components/data-filters";
+import { DataTable } from "@/features/tasks/components/data-table";
 import { useCreateTaskModal } from "@/features/tasks/hooks/use-create-task-modal";
 import { useTaskFilters } from "@/features/tasks/hooks/use-task-filters";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
@@ -41,9 +43,11 @@ const TaskViewSwitcher = () => {
             <TabsTrigger value="table" className="h-8 w-full lg:w-auto">
               Table
             </TabsTrigger>
+
             <TabsTrigger value="kanban" className="h-8 w-full lg:w-auto">
               Kanban
             </TabsTrigger>
+
             <TabsTrigger value="calendar" className="h-8 w-full lg:w-auto">
               Calendar
             </TabsTrigger>
@@ -73,7 +77,7 @@ const TaskViewSwitcher = () => {
         ) : (
           <>
             <TabsContent value="table" className="mt-0">
-              Data table
+              <DataTable columns={columns} data={tasks?.documents ?? []} />
             </TabsContent>
             <TabsContent value="kanban" className="mt-0">
               Data kanban
