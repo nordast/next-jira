@@ -26,6 +26,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import MemberAvatar from "@/features/members/components/member-avatar";
 import ProjectAvatar from "@/features/projects/components/project-avatar";
+import { useProjectId } from "@/features/projects/hooks/use-project-id";
 import { useCreateTask } from "@/features/tasks/api/use-create-task";
 import { TaskStatus } from "@/features/tasks/types";
 import { createTaskSchema } from "@/features/tasks/validations";
@@ -44,12 +45,14 @@ const CreateTaskForm = ({
   memberOptions,
 }: CreateTaskFormProps) => {
   const workspaceId = useWorkspaceId();
+  const projectId = useProjectId();
   const { mutate, isPending } = useCreateTask();
 
   const form = useForm<z.infer<typeof createTaskSchema>>({
     resolver: zodResolver(createTaskSchema.omit({ workspaceId: true })),
     defaultValues: {
       workspaceId,
+      projectId,
     },
   });
 
