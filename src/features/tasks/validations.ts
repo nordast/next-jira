@@ -10,13 +10,3 @@ export const createTaskSchema = z.object({
   assigneeId: z.string().trim().min(1, "Required"),
   description: z.string().optional(),
 });
-
-export const updateTaskSchema = z.object({
-  name: z.string().trim().min(1, "Required").max(255).optional(),
-  image: z
-    .union([
-      z.instanceof(File),
-      z.string().transform((value) => (value === "" ? undefined : value)),
-    ])
-    .optional(),
-});
