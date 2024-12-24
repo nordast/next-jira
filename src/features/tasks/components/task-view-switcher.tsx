@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useGetTasks } from "@/features/tasks/api/use-get-tasks";
 import { columns } from "@/features/tasks/components/columns";
 import DataFilters from "@/features/tasks/components/data-filters";
+import DataKanban from "@/features/tasks/components/data-kanban";
 import { DataTable } from "@/features/tasks/components/data-table";
 import { useCreateTaskModal } from "@/features/tasks/hooks/use-create-task-modal";
 import { useTaskFilters } from "@/features/tasks/hooks/use-task-filters";
@@ -80,7 +81,7 @@ const TaskViewSwitcher = () => {
               <DataTable columns={columns} data={tasks?.documents ?? []} />
             </TabsContent>
             <TabsContent value="kanban" className="mt-0">
-              Data kanban
+              <DataKanban data={tasks?.documents ?? []} />
             </TabsContent>
             <TabsContent value="calendar" className="mt-0">
               Data calendar
