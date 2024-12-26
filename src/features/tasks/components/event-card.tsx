@@ -1,7 +1,9 @@
+import { useRouter } from "next/navigation";
 import MemberAvatar from "@/features/members/components/member-avatar";
 import ProjectAvatar from "@/features/projects/components/project-avatar";
 import { Project } from "@/features/projects/types";
 import { TaskStatus } from "@/features/tasks/types";
+import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { cn } from "@/lib/utils";
 
 const statusColorMap: Record<TaskStatus, string> = {
@@ -27,9 +29,18 @@ const EventCard = ({
   status,
   id,
 }: EventCardProps) => {
+  const workspaceId = useWorkspaceId();
+  const router = useRouter();
+
+  const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+    router.push(`/workspaces/${workspaceId}/tasks/${id}`);
+  };
+
   return (
     <div className="px-2">
       <div
+        onClick={onClick}
         className={cn(
           "flex cursor-pointer flex-col gap-y-1.5 rounded-md border border-l-4 bg-white p-1.5 text-xs text-primary transition hover:opacity-75",
           statusColorMap[status],
