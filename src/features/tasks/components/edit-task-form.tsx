@@ -26,11 +26,9 @@ import {
 import { Separator } from "@/components/ui/separator";
 import MemberAvatar from "@/features/members/components/member-avatar";
 import ProjectAvatar from "@/features/projects/components/project-avatar";
-import { useProjectId } from "@/features/projects/hooks/use-project-id";
 import { useUpdateTask } from "@/features/tasks/api/use-update-task";
 import { Task, TaskStatus } from "@/features/tasks/types";
 import { createTaskSchema } from "@/features/tasks/validations";
-import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { cn } from "@/lib/utils";
 
 interface EditTaskFormProps {
@@ -46,8 +44,6 @@ const EditTaskForm = ({
   memberOptions,
   initialValues,
 }: EditTaskFormProps) => {
-  const workspaceId = useWorkspaceId();
-  const projectId = useProjectId();
   const { mutate, isPending } = useUpdateTask();
 
   const form = useForm<z.infer<typeof createTaskSchema>>({
@@ -59,7 +55,7 @@ const EditTaskForm = ({
       dueDate: initialValues.dueDate
         ? new Date(initialValues.dueDate)
         : undefined,
-      projectId,
+      projectId: initialValues.projectId ?? "",
       assigneeId: initialValues.assigneeId ?? "",
       status: initialValues.status ?? TaskStatus.BACKLOG,
     },
