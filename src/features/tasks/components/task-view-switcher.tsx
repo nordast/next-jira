@@ -18,7 +18,11 @@ import { useTaskFilters } from "@/features/tasks/hooks/use-task-filters";
 import { TaskStatus } from "@/features/tasks/types";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 
-const TaskViewSwitcher = () => {
+interface TaskViewSwitcherProps {
+  hideProjectFilter?: boolean;
+}
+
+const TaskViewSwitcher = ({ hideProjectFilter }: TaskViewSwitcherProps) => {
   const [{ status, assigneeId, projectId, dueDate }] = useTaskFilters();
 
   const [view, setView] = useQueryState("task-view", {
@@ -82,7 +86,7 @@ const TaskViewSwitcher = () => {
 
         <Separator className="my-4" />
 
-        <DataFilters />
+        <DataFilters hideProjectFilter={hideProjectFilter} />
 
         <Separator className="my-4" />
 
