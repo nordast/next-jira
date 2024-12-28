@@ -74,11 +74,11 @@ const EditWorkspaceForm = ({
 
     mutate(
       { form: finalValues, param: { workspaceId: initialValues.$id } },
-      {
-        onSuccess: () => {
-          form.reset();
-        },
-      },
+      // {
+      //   onSuccess: () => {
+      //     form.reset();
+      //   },
+      // },
     );
   };
 
