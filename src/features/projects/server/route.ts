@@ -2,7 +2,7 @@ import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { ID, Query } from "node-appwrite";
 import { z } from "zod";
-import { BUCKET_ID, DATABASE_ID, PROJECTS_ID, WORKSPACES_ID } from "@/config";
+import { BUCKET_ID, DATABASE_ID, PROJECTS_ID } from "@/config";
 import { getMember } from "@/features/members/utils";
 import { Project } from "@/features/projects/types";
 import {
@@ -154,7 +154,7 @@ const app = new Hono()
 
       const project = await databases.updateDocument(
         DATABASE_ID,
-        WORKSPACES_ID,
+        PROJECTS_ID,
         projectId,
         {
           name,
