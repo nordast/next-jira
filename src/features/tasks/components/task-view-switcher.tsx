@@ -92,7 +92,7 @@ const TaskViewSwitcher = ({ hideProjectFilter }: TaskViewSwitcherProps) => {
 
         {isLoadingTasks ? (
           <div className="flex h-[200px] w-full flex-col items-center justify-center rounded-lg border">
-            <Loader className="size-5 animate-spin text-muted-foreground" />
+            <Loader className="size-6 animate-spin text-muted-foreground" />
           </div>
         ) : (
           <>
