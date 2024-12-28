@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/select";
 import { useGetMembers } from "@/features/members/api/use-get-members";
 import { useGetProjects } from "@/features/projects/api/use-get-projects";
+import { useProjectId } from "@/features/projects/hooks/use-project-id";
 import { useTaskFilters } from "@/features/tasks/hooks/use-task-filters";
 import { TaskStatus } from "@/features/tasks/types";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
@@ -20,6 +21,7 @@ interface DataFiltersProps {
 
 const DataFilters = ({ hideProjectFilter }: DataFiltersProps) => {
   const workspaceId = useWorkspaceId();
+  const currentProjectId = useProjectId();
 
   const { data: projects, isLoading: isLoadingProjects } = useGetProjects({
     workspaceId,
@@ -103,7 +105,7 @@ const DataFilters = ({ hideProjectFilter }: DataFiltersProps) => {
 
       {!hideProjectFilter && (
         <Select
-          defaultValue={projectId || undefined}
+          defaultValue={projectId || currentProjectId || undefined}
           onValueChange={(value) => onProjectChange(value)}
         >
           <SelectTrigger className="h-8 w-full lg:w-auto">
