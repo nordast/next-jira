@@ -344,7 +344,11 @@ const app = new Hono()
         return c.json({ error: "Invalid workspaceId" }, 400);
       }
 
-      const workspaceId = workspaceIds.values().next().value || "";
+      const workspaceId = workspaceIds.values().next().value;
+
+      if (!workspaceId) {
+        return c.json({ error: "Workspace ID is required" }, 400);
+      }
 
       const member = await getMember({
         databases,
