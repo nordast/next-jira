@@ -79,7 +79,7 @@ const TaskViewSwitcher = ({ hideProjectFilter }: TaskViewSwitcherProps) => {
             title="Create new task"
             onClick={() => setIsOpen(true)}
           >
-            <PlusIcon className="size-4" />
+            <PlusIcon className="size-4 text-neutral-500" />
             New
           </Button>
         </div>
