@@ -11,7 +11,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useGetMembers } from "@/features/members/api/use-get-members";
 import { useGetProjects } from "@/features/projects/api/use-get-projects";
+import ProjectAvatar from "@/features/projects/components/project-avatar";
 import { useCreateProjectModal } from "@/features/projects/hooks/use-create-project-modal";
+import { Project } from "@/features/projects/types";
 import { useGetTasks } from "@/features/tasks/api/use-get-tasks";
 import { useCreateTaskModal } from "@/features/tasks/hooks/use-create-task-modal";
 import { Task } from "@/features/tasks/types";
@@ -33,8 +35,6 @@ export const WorkspaceIdClient = () => {
     workspaceId,
   });
 
-  const { setIsOpen: setIsOpenProjectModal } = useCreateProjectModal();
-
   const isLoading =
     isLoadingAnalytics ||
     isLoadingTasks ||
@@ -52,6 +52,7 @@ export const WorkspaceIdClient = () => {
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
         <TaskList data={tasks.documents} total={tasks.total} />
+        <ProjectList data={projects.documents} total={projects.total} />
       </div>
     </div>
   );
@@ -109,6 +110,63 @@ export const TaskList = ({ data, total }: TaskListProps) => {
         <Button variant="muted" className="mt-4 w-full" asChild>
           <Link href={`/workspaces/${workspaceId}/tasks`}>Show All</Link>
         </Button>
+      </div>
+    </div>
+  );
+};
+
+interface ProjectListProps {
+  data: Project[];
+  total: number;
+}
+
+export const ProjectList = ({ data, total }: ProjectListProps) => {
+  const workspaceId = useWorkspaceId();
+  const { setIsOpen } = useCreateProjectModal();
+
+  return (
+    <div className="col-span-1 flex flex-col gap-y-4">
+      <div className="rounded-lg border bg-white p-4">
+        <div className="flex items-center justify-between">
+          <p className="text-lg font-semibold">Projects ({total})</p>
+          <Button
+            variant="secondary"
+            size="icon"
+            onClick={() => setIsOpen(true)}
+          >
+            <PlusIcon className="size-4 text-neutral-500" />
+          </Button>
+        </div>
+
+        <Separator className="my-4" />
+
+        <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          {data.map((project) => (
+            <li key={project.$id}>
+              <Link
+                href={`/workspaces/${project.workspaceId}/projects/${project.$id}`}
+              >
+                <Card className="rounded-lg shadow-none transition hover:opacity-75">
+                  <CardContent className="flex items-center gap-x-2.5 p-4">
+                    <ProjectAvatar
+                      name={project.name}
+                      image={project.imageUrl}
+                      className="size-12"
+                      fallbackClassName="text-lg"
+                    />
+                    <p className="truncate text-lg font-medium">
+                      {project.name}
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
+            </li>
+          ))}
+
+          <li className="hidden text-center text-sm text-muted-foreground first-of-type:block">
+            No projects found
+          </li>
+        </ul>
       </div>
     </div>
   );
