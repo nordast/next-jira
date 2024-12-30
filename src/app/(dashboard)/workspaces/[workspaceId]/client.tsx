@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
-import { CalendarIcon, PlusIcon } from "lucide-react";
+import { CalendarIcon, PlusIcon, SettingsIcon } from "lucide-react";
 import Analytics from "@/components/analytics";
 import PageError from "@/components/page-error";
 import PageLoader from "@/components/page-loader";
@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useGetMembers } from "@/features/members/api/use-get-members";
+import MemberAvatar from "@/features/members/components/member-avatar";
+import { Member } from "@/features/members/types";
 import { useGetProjects } from "@/features/projects/api/use-get-projects";
 import ProjectAvatar from "@/features/projects/components/project-avatar";
 import { useCreateProjectModal } from "@/features/projects/hooks/use-create-project-modal";
@@ -53,6 +55,7 @@ export const WorkspaceIdClient = () => {
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
         <TaskList data={tasks.documents} total={tasks.total} />
         <ProjectList data={projects.documents} total={projects.total} />
+        <MemberList data={members.documents} total={members.total} />
       </div>
     </div>
   );
@@ -121,7 +124,6 @@ interface ProjectListProps {
 }
 
 export const ProjectList = ({ data, total }: ProjectListProps) => {
-  const workspaceId = useWorkspaceId();
   const { setIsOpen } = useCreateProjectModal();
 
   return (
@@ -165,6 +167,60 @@ export const ProjectList = ({ data, total }: ProjectListProps) => {
 
           <li className="hidden text-center text-sm text-muted-foreground first-of-type:block">
             No projects found
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+interface MemberListProps {
+  data: Member[];
+  total: number;
+}
+
+export const MemberList = ({ data, total }: MemberListProps) => {
+  const workspaceId = useWorkspaceId();
+
+  return (
+    <div className="col-span-1 flex flex-col gap-y-4">
+      <div className="rounded-lg border bg-white p-4">
+        <div className="flex items-center justify-between">
+          <p className="text-lg font-semibold">Members ({total})</p>
+          <Button variant="secondary" size="icon" asChild>
+            <Link href={`/workspaces/${workspaceId}/members`}>
+              <SettingsIcon className="size-4 text-neutral-500" />
+            </Link>
+          </Button>
+        </div>
+
+        <Separator className="my-4" />
+
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {data.map((member) => (
+            <li key={member.$id}>
+              <Card className="shadow- none overflow-hidden rounded-lg">
+                <CardContent className="flex flex-col items-center gap-x-2 p-3">
+                  <MemberAvatar
+                    name={member.name}
+                    className="size-12"
+                    fallbackClassName="text-lg"
+                  />
+                  <div className="flex flex-col items-center overflow-hidden">
+                    <p className="line-clamp-1 text-lg font-medium">
+                      {member.name}
+                    </p>
+                    <p className="line-clamp-1 text-sm font-medium text-muted-foreground">
+                      {member.email}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </li>
+          ))}
+
+          <li className="hidden text-center text-sm text-muted-foreground first-of-type:block">
+            No members found
           </li>
         </ul>
       </div>
