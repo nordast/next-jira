@@ -6,6 +6,7 @@ import { useQueryState } from "nuqs";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useProjectId } from "@/features/projects/hooks/use-project-id";
 import { useBulkUpdateTasks } from "@/features/tasks/api/use-bulk-update-tasks";
 import { useGetTasks } from "@/features/tasks/api/use-get-tasks";
 import { columns } from "@/features/tasks/components/columns";
@@ -30,11 +31,13 @@ const TaskViewSwitcher = ({ hideProjectFilter }: TaskViewSwitcherProps) => {
   });
 
   const workspaceId = useWorkspaceId();
+  const paramProjectId = useProjectId();
+
   const { data: tasks, isLoading: isLoadingTasks } = useGetTasks({
     workspaceId,
     status,
     assigneeId,
-    projectId,
+    projectId: paramProjectId || projectId,
     dueDate,
   });
 
