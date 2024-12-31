@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { useLogin } from "@/features/auth/api/use-login";
 import { loginSchema } from "@/features/auth/validations";
-import { signUpWithGithub } from "@/lib/oauth";
+import { signUpWithGithub, signUpWithGoogle } from "@/lib/oauth";
 
 export const SignInCard = () => {
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -91,6 +91,8 @@ export const SignInCard = () => {
                 disabled={isPending}
                 size="lg"
                 className="w-full"
+                type="button"
+                onClick={() => signUpWithGoogle()}
               >
                 <FcGoogle className="mr-1 size-5" />
                 Login with Google

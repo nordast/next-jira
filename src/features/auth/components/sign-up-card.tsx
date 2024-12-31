@@ -25,6 +25,7 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { useRegister } from "@/features/auth/api/use-register";
 import { registerSchema } from "@/features/auth/validations";
+import { signUpWithGithub, signUpWithGoogle } from "@/lib/oauth";
 
 export const SignUpCard = () => {
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -123,6 +124,8 @@ export const SignUpCard = () => {
                 disabled={isPending}
                 size="lg"
                 className="w-full"
+                type="button"
+                onClick={() => signUpWithGoogle()}
               >
                 <FcGoogle className="mr-1 size-5" />
                 Register with Google
@@ -133,6 +136,8 @@ export const SignUpCard = () => {
                 disabled={isPending}
                 size="lg"
                 className="w-full"
+                type="button"
+                onClick={() => signUpWithGithub()}
               >
                 <FaGithub className="mr-1 size-5" />
                 Register with GitHub
