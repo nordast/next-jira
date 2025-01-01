@@ -1,12 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Next Jira Clone
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-```
+https://next-jira-eta.vercel.app/sign-in
 
 ## Tech Stack
 
@@ -17,3 +11,11 @@ npm run dev
 - TailwindCSS
 - ShadCN
 - AppWrite
+
+## Installation
+
+Install the project dependencies using npm:
+
+```bash
+npm install
+```
