@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import React from "react";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import QueryProvider from "@/app/query-provider";
+import { ThemeProvider } from "@/app/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 import "./globals.css";
@@ -22,12 +23,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="">
+    <html lang="en" suppressHydrationWarning>
       <body className={cn(inter.className, "min-h-screen antialiased")}>
-        <QueryProvider>
-          <Toaster />
-          <NuqsAdapter>{children}</NuqsAdapter>
-        </QueryProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <QueryProvider>
+            <Toaster />
+            <NuqsAdapter>{children}</NuqsAdapter>
+          </QueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
