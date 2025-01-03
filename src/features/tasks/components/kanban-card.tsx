@@ -12,7 +12,7 @@ interface KanbanCardProps {
 
 const KanbanCard = ({ task }: KanbanCardProps) => {
   return (
-    <div className="mb-1.5 space-y-3 rounded bg-white p-2.5 shadow-sm">
+    <div className="mb-1.5 space-y-3 rounded bg-white p-2.5 shadow-sm dark:bg-primary-foreground">
       <div className="flex items-start justify-between gap-x-2">
         <p className="line-clamp-2 text-sm">{task.name}</p>
         <TaskActions id={task.$id} projectId={task.projectId}>

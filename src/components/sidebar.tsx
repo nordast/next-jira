@@ -1,6 +1,4 @@
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
+import Logo from "@/components/logo";
 import Navigation from "@/components/navigation";
 import Projects from "@/components/projects";
 import { Separator } from "@/components/ui/separator";
@@ -8,17 +6,8 @@ import WorkspaceSwitcher from "@/components/workspace-switcher";
 
 const Sidebar = () => {
   return (
-    <aside className="h-full w-full bg-neutral-100 p-4">
-      <Link href="/">
-        <Image
-          src="/logo.svg"
-          alt="Logo"
-          height={56}
-          width={152}
-          priority={true}
-          className="w-auto"
-        />
-      </Link>
+    <aside className="h-full w-full bg-neutral-100 p-4 dark:bg-muted">
+      <Logo />
 
       <Separator className="my-4" />
 

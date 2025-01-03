@@ -32,6 +32,7 @@
 
 .rbc-today {
   /*background: inherit;*/
+  @apply dark:bg-blue-800/20
 }
 
 .rbc-off-range-bg {

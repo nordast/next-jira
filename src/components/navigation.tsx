@@ -59,7 +59,7 @@ const Navigation = () => {
                 className={cn(
                   "flex items-center gap-2.5 rounded-md p-2.5 font-medium text-neutral-500 transition-colors hover:text-primary",
                   isActive &&
-                    "bg-white text-primary shadow-sm hover:opacity-100",
+                    "bg-white text-primary shadow-sm hover:opacity-100 dark:bg-neutral-900 dark:text-neutral-100",
                 )}
               >
                 <Icon className="h-5 w-5 text-neutral-500" />

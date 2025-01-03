@@ -1,6 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
 import React from "react";
+import Logo from "@/components/logo";
 import UserButton from "@/features/auth/components/user-button";
 
 interface StandaloneLayoutProps {
@@ -9,19 +8,10 @@ interface StandaloneLayoutProps {
 
 const StandaloneLayout = ({ children }: StandaloneLayoutProps) => {
   return (
-    <main className="min-h-screen bg-neutral-100">
+    <main className="min-h-screen bg-neutral-100 dark:bg-neutral-900">
       <div className="mx-auto max-w-screen-2xl p-4">
         <nav className="flex h-[73px] items-center justify-between">
-          <Link href="/" className="cursor-pointer">
-            <Image
-              src="/logo.svg"
-              alt="Logo"
-              height={56}
-              width={152}
-              priority={true}
-              className="w-auto"
-            />
-          </Link>
+          <Logo />
 
           <UserButton />
         </nav>

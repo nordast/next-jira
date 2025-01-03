@@ -43,7 +43,7 @@ const EventCard = ({
       <div
         onClick={onClick}
         className={cn(
-          "flex cursor-pointer flex-col gap-y-1.5 rounded-md border border-l-4 bg-white p-1.5 text-xs text-primary transition hover:opacity-75",
+          "flex cursor-pointer flex-col gap-y-1.5 rounded-md border border-l-4 bg-white p-1.5 text-xs text-primary transition hover:opacity-75 dark:bg-primary-foreground",
           statusColorMap[status],
         )}
       >

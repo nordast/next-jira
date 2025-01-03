@@ -38,7 +38,7 @@ const WorkspaceSwitcher = () => {
 
       {!isLoading && workspaces?.total !== 0 && (
         <Select onValueChange={onSelect} value={workspaceId}>
-          <SelectTrigger className="w-full bg-neutral-200 p-1 font-medium">
+          <SelectTrigger className="w-full bg-neutral-200 p-1 font-medium dark:bg-neutral-900">
             <SelectValue placeholder="Select workspace" />
           </SelectTrigger>
 

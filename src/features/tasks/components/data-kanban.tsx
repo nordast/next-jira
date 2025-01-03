@@ -113,7 +113,7 @@ const DataKanban = ({ data, onChange }: DataKanbanProps) => {
         destColumn.splice(destination.index, 0, updatedMovedTask);
         newTasks[destStatus] = destColumn;
 
-        // Prepary minimum update payloads
+        // Prepare minimum update payloads
         updatesPayload.push({
           $id: updatedMovedTask.$id,
           status: destStatus,
