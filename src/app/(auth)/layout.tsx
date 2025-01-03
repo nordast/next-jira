@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 
 interface AuthLayoutProps {
@@ -29,11 +30,15 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
             />
           </Link>
 
-          <Link href={isSignIn ? "/sign-up" : "/sign-in"}>
-            <Button variant="secondary">
-              {isSignIn ? "Sign Up" : "Sign In"}
-            </Button>
-          </Link>
+          <div className="flex items-center gap-x-4">
+            <ModeToggle />
+
+            <Link href={isSignIn ? "/sign-up" : "/sign-in"}>
+              <Button variant="secondary">
+                {isSignIn ? "Sign Up" : "Sign In"}
+              </Button>
+            </Link>
+          </div>
         </nav>
 
         <div className="flex flex-col items-center justify-center pt-4 md:pt-14">

@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import React from "react";
 import MobileSidebar from "@/components/mobile-sidebar";
+import { ModeToggle } from "@/components/mode-toggle";
 import UserButton from "@/features/auth/components/user-button";
 
 const pathnameMap = {
@@ -35,8 +36,11 @@ const Navbar = () => {
         <p className="text-muted-foreground">{description}</p>
       </div>
 
-      <MobileSidebar />
-      <UserButton />
+      <div className="flex items-center gap-x-4">
+        <ModeToggle />
+        <MobileSidebar />
+        <UserButton />
+      </div>
     </nav>
   );
 };
